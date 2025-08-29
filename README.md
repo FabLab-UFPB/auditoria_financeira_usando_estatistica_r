@@ -251,7 +251,7 @@ Agradecimentos especiais aos **professores orientadores** pela orientação acad
 
 **📊 Análise Rigorosa • 🎯 Resultados Práticos • 🚀 Implementação Viável**
 
-*Desenvolvido com rigor científico para o FabLab UFPB*
+*Desenvolvido pelo estudante de estatística Diogo Rego com rigor científico para o Fablab*
 
 [![UFPB](https://img.shields.io/badge/UFPB-Universidade%20Federal%20da%20Paraíba-blue)](https://www.ufpb.br/)
 [![FabLab](https://img.shields.io/badge/FabLab-CEAR%20UFPB-green)](https://www.ufpb.br/fablab/)
