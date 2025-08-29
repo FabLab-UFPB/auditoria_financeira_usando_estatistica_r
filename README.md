@@ -1,477 +1,260 @@
-# DOCUMENTAÇÃO COMPLETA DOS MODELOS DE CÁLCULOS
-## Auditoria Financeira FabLab - Análise Temporal de Irregularidades
+# 📊 Análise Comparativa de Preços - FabLab UFPB
 
-**Elaborado por:** Guilherme Rocha - Auditoria Especializada  
-**Data:** 22 de Julho de 2025  
-**Versão:** 1.0 - DOCUMENTAÇÃO TÉCNICA
+<div align="center">
 
----
+![FabLab UFPB](https://img.shields.io/badge/FabLab-UFPB-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Concluído-success?style=for-the-badge)
+![Confiabilidade](https://img.shields.io/badge/Confiabilidade-90%25-brightgreen?style=for-the-badge)
 
-## SUMÁRIO EXECUTIVO
+**Relatório Administrativo Completo sobre Procedimentos e Competitividade de Preços**
 
-Esta documentação apresenta **todos os modelos matemáticos, estatísticos e computacionais** utilizados para calcular os valores apresentados nos relatórios de auditoria do FabLab. Os modelos foram implementados em linguagem R e validados através de múltiplas metodologias.
-
-### Principais Valores Calculados e Validados:
-- **Custo Total (6 meses):** R$ 27.225,00
-- **Horas Perdidas:** 1.997 horas
-- **ROI do Projeto:** 172,25%
-- **Payback:** 4,41 meses
-- **Projeção Mês 12:** R$ 34.800,33 (Monte Carlo)
+</div>
 
 ---
 
-## 1. MODELOS DE CRESCIMENTO TEMPORAL
+## 👨‍🎓 **INFORMAÇÕES ACADÊMICAS**
 
-### 1.1 Fórmula Base: Crescimento Exponencial Composto
+| **Campo** | **Informação** |
+|-----------|----------------|
+| **Aluno** | Diogo da Silva Rego |
+| **Matrícula** | 20240045381 |
+| **Curso** | Estatística - UFPB |
+| **Instituição** | Universidade Federal da Paraíba (UFPB) |
+| **Centro** | Centro de Ciências Exatas e da Natureza (CCEN) |
 
-**Equação Matemática:**
-```
-V(t) = V₀ × (1 + r)^t
-```
+### 👨‍🏫 **Professores Orientadores**
 
-**Onde:**
-- V(t) = Valor no tempo t
-- V₀ = Valor inicial
-- r = Taxa de crescimento por período
-- t = Número de períodos
-
-**Implementação em R:**
-```r
-crescimento_exponencial <- function(valor_inicial, taxa_crescimento, tempo) {
-  resultado <- valor_inicial * (1 + taxa_crescimento)^tempo
-  return(resultado)
-}
-```
-
-**Aplicação Prática - IRR-HTML-005 (Sistema Isolado):**
-```r
-# Parâmetros
-V₀ = 4,0 horas/dia × 22 dias × R$ 30/hora = R$ 2.640
-r = 0,15 (15% ao mês)
-t = 6 meses
-
-# Cálculo
-V(6) = 2.640 × (1 + 0,15)^6 = R$ 6.106,48
-```
-
-**Validação:** Este modelo explica o crescimento de R$ 2.640 para R$ 6.106,48 em 6 meses, representando 131% de aumento.
-
-### 1.2 Modelo de Regressão Temporal
-
-**Equação Linearizada:**
-```
-ln(Y) = ln(a) + b×t
-Y = a × e^(b×t)
-```
-
-**Implementação em R:**
-```r
-ajustar_modelo_temporal <- function(dados_temporais) {
-  modelo_linear <- lm(log(custo_total) ~ mes, data = dados_temporais)
-  a <- exp(coef(modelo_linear)[1])
-  b <- coef(modelo_linear)[2]
-  return(list(a = a, b = b, r_squared = summary(modelo_linear)$r.squared))
-}
-```
-
-**Resultados Obtidos:**
-- **Coeficiente a:** 2.805
-- **Coeficiente b:** 495
-- **R²:** 1,0 (ajuste perfeito)
-- **Equação:** Y = 2.805 + 495×t
+- **Prof. Dr. Cláudio José da Rocha**
+- **Prof. Dr. Carlos Alberto da Silva**  
+- **Prof. Dr. Luciano Farias**
 
 ---
 
-## 2. MODELOS FINANCEIROS
+## 🎯 **RESUMO EXECUTIVO**
 
-### 2.1 Valor Presente Líquido (VPL)
+Este repositório contém uma **análise comparativa completa** dos preços praticados pelo FabLab UFPB em relação ao mercado nacional e local da Paraíba. O estudo identificou **oportunidades significativas de melhoria** na receita do laboratório, mantendo sua competitividade e missão educacional.
 
-**Fórmula:**
+### 🔍 **Principais Descobertas**
+
+- **Problema crítico identificado:** Gerador de boletos limitado a 99 propostas
+- **19 concorrentes mapeados** no estado da Paraíba
+- **Potencial de aumento de receita:** 40-80% (R$ 2.268 - R$ 4.536/ano)
+- **Posição competitiva:** FabLab 67% abaixo do mercado em CNC Router
+- **Metodologia rigorosa:** 90% de confiabilidade nos dados
+
+### 📈 **Resultados Quantitativos**
+
+| Métrica | Valor Atual | Potencial | Melhoria |
+|---------|-------------|-----------|----------|
+| **Receita Anual** | R$ 5.670 | R$ 10.206 | +80% |
+| **Requisições/Mês** | 10,5 | 13+ | +25% |
+| **Competitividade CNC** | 67% abaixo | 33% abaixo | Melhor posicionamento |
+| **Concorrentes Identificados** | - | 19 empresas | Mapeamento completo |
+
+---
+
+## 📁 **ESTRUTURA DO REPOSITÓRIO**
+
 ```
-VPL = Σ[FC(t) / (1 + r)^t] - I₀
-```
-
-**Implementação em R:**
-```r
-calcular_vpl <- function(fluxos_caixa, taxa_desconto, investimento_inicial) {
-  vpl <- -investimento_inicial
-  for (t in 1:length(fluxos_caixa)) {
-    vpl <- vpl + (fluxos_caixa[t] / (1 + taxa_desconto)^t)
-  }
-  return(vpl)
-}
-```
-
-**Cálculo Detalhado:**
-```r
-# Parâmetros
-Fluxos mensais: R$ 4.537,50 × 12 meses
-Taxa de desconto: 1% ao mês
-Investimento inicial: R$ 20.000
-
-# Resultado
-VPL = R$ 31.069,91
-```
-
-### 2.2 Retorno Sobre Investimento (ROI)
-
-**Fórmula:**
-```
-ROI = (Benefício - Investimento) / Investimento × 100
-```
-
-**Cálculo:**
-```r
-Benefício anual: R$ 54.450
-Investimento: R$ 20.000
-ROI = (54.450 - 20.000) / 20.000 × 100 = 172,25%
-```
-
-### 2.3 Período de Payback
-
-**Fórmula:**
-```
-Payback = Investimento_Inicial / Fluxo_Caixa_Mensal
-```
-
-**Cálculo:**
-```r
-Payback = 20.000 / 4.537,50 = 4,41 meses
+📦 fablab-ufpb-analise-precos/
+├── 📄 README.md                          # Este arquivo
+├── 📊 dados/                             # Dados coletados e processados
+│   ├── fablab_precos_oficiais.csv
+│   ├── concorrentes_paraiba.csv
+│   ├── requisicoes_2025.csv
+│   └── benchmarks_nacionais.csv
+├── 📈 graficos/                          # Visualizações geradas
+│   ├── comparacao_mercado_paraiba.png
+│   ├── oportunidades_mercado_paraiba.png
+│   ├── mapa_concorrencia_paraiba.png
+│   └── analise_roi_completa.png
+├── 📋 relatorios/                        # Documentação completa
+│   ├── relatorio_administrativo_final.md
+│   ├── relatorio_metodologico_completo.md
+│   ├── verificacao_dados_fablab.md
+│   └── analise_comparativa_paraiba.md
+├── 🔧 codigo/                            # Scripts de análise
+│   ├── analise_roi_fablab.py
+│   ├── graficos_mercado_paraiba.py
+│   └── gerador_boletos_corrigido.html
+├── 📚 metodologia/                       # Documentação metodológica
+│   ├── fontes_dados_completas.md
+│   ├── verificacao_confiabilidade_graficos.md
+│   └── processo_investigativo_detalhado.md
+└── 🎯 propostas/                         # Soluções e recomendações
+    ├── propostas_melhorias.md
+    ├── cronograma_implementacao.md
+    └── correcao_campo_proposta.md
 ```
 
 ---
 
-## 3. MODELOS DE PRODUTIVIDADE
+## 🚀 **COMO USAR ESTE REPOSITÓRIO**
 
-### 3.1 Perda de Produtividade Percentual
+### 📖 **Para Leitura Acadêmica**
+1. Comece pelo [Relatório Administrativo Final](relatorios/relatorio_administrativo_final.md)
+2. Consulte a [Metodologia Completa](relatorios/relatorio_metodologico_completo.md)
+3. Verifique as [Fontes de Dados](metodologia/fontes_dados_completas.md)
 
-**Fórmula:**
-```
-PP = (Horas_Perdidas / Horas_Totais_Disponíveis) × 100
-```
+### 🔬 **Para Validação Científica**
+1. Examine a [Verificação dos Dados](relatorios/verificacao_dados_fablab.md)
+2. Analise a [Confiabilidade dos Gráficos](metodologia/verificacao_confiabilidade_graficos.md)
+3. Reproduza os [Scripts de Análise](codigo/)
 
-**Implementação em R:**
-```r
-calcular_perda_produtividade <- function(horas_perdidas, horas_totais) {
-  return((horas_perdidas / horas_totais) * 100)
-}
-```
-
-**Exemplo Mês 6:**
-```r
-Horas perdidas: 423,5h
-Horas disponíveis: 22 dias × 8h × 3 funcionários = 528h
-PP = (423,5 / 528) × 100 = 80,21%
-```
+### 💼 **Para Implementação Prática**
+1. Consulte as [Propostas de Melhorias](propostas/propostas_melhorias.md)
+2. Siga o [Cronograma de Implementação](propostas/cronograma_implementacao.md)
+3. Use o [Gerador de Boletos Corrigido](codigo/gerador_boletos_corrigido.html)
 
 ---
 
-## 4. MODELOS ESTATÍSTICOS AVANÇADOS
+## 📊 **PRINCIPAIS RESULTADOS**
 
-### 4.1 Correlação de Pearson
+### 🎯 **Análise de Competitividade**
 
-**Fórmula:**
-```
-r = Σ[(xi - x̄)(yi - ȳ)] / √[Σ(xi - x̄)² × Σ(yi - ȳ)²]
-```
+| Serviço | FabLab (Empresa) | Mercado PB | Competitividade |
+|---------|------------------|------------|-----------------|
+| **Impressão 3D FDM** | R$ 16,00/h | R$ 20-30/h | ✅ Competitivo |
+| **Corte a Laser** | R$ 72,00/h | R$ 80,00/h | ✅ 10% abaixo |
+| **CNC Router** | R$ 40,00/h | R$ 120,00/h | ⚠️ 67% abaixo |
+| **Salas de Reunião** | R$ 40,00/h | R$ 40,00/h | ✅ Alinhado |
 
-**Resultado Obtido:**
-- **Correlação tempo vs custo:** r = 1,0 (correlação perfeita)
+### 📈 **Projeções de Receita**
 
-### 4.2 Análise de Variância (ANOVA)
+| Cenário | Aumento | Nova Receita | Investimento |
+|---------|---------|--------------|--------------|
+| **Conservador** | +40% | R$ 7.938/ano | Baixo |
+| **Realista** | +60% | R$ 9.072/ano | Médio |
+| **Otimista** | +80% | R$ 10.206/ano | Alto |
 
-**Modelo:**
-```
-Custo_Mensal ~ Categoria_Irregularidade
-```
+### 🗺️ **Mapeamento da Concorrência**
 
-**Implementação em R:**
-```r
-modelo_anova <- aov(custo_mensal ~ categoria, data = dados_temporais)
-```
-
-### 4.3 Séries Temporais (ARIMA)
-
-**Modelo Identificado:**
-```
-ARIMA(p,d,q) automaticamente selecionado
-```
-
-**Implementação em R:**
-```r
-modelo_arima <- auto.arima(ts_custos)
-previsoes <- forecast(modelo_arima, h = 6)
-```
+- **João Pessoa:** 13 empresas identificadas
+- **Campina Grande:** 6 empresas identificadas
+- **Total:** 19 concorrentes diretos na Paraíba
+- **Maior concorrência:** Corte a Laser (7 empresas)
+- **Menor concorrência:** Impressão 3D (4 empresas)
 
 ---
 
-## 5. SIMULAÇÃO MONTE CARLO
+## 🔧 **TECNOLOGIAS UTILIZADAS**
 
-### 5.1 Metodologia
+### 📊 **Análise de Dados**
+- **Python 3.11** - Análise estatística
+- **Pandas** - Manipulação de dados
+- **Matplotlib/Seaborn** - Visualizações
+- **NumPy** - Cálculos numéricos
 
-**Parâmetros Estocásticos:**
-- Taxa de crescimento: Normal(μ=0,15, σ=0,05)
-- Custo base: Normal(μ=5.775, σ=500)
-- Fator sazonalidade: Uniforme(0,8; 1,2)
+### 🌐 **Coleta de Dados**
+- **Web Scraping** - Coleta automatizada
+- **APIs** - Acesso a dados estruturados
+- **Navegação web** - Pesquisa manual direcionada
 
-**Implementação em R:**
-```r
-simulacao_monte_carlo <- function(n_simulacoes = 5000, meses_projecao = 12) {
-  for (sim in 1:n_simulacoes) {
-    taxa_crescimento <- rnorm(1, mean = 0.15, sd = 0.05)
-    custo_base <- rnorm(1, mean = 5775, sd = 500)
-    fator_sazonalidade <- runif(1, min = 0.8, max = 1.2)
-    
-    for (mes in 1:meses_projecao) {
-      sazonalidade <- 1 + 0.1 * sin(2 * pi * mes / 12) * fator_sazonalidade
-      custo_total <- custo_base * (1 + taxa_crescimento)^mes * sazonalidade
-    }
-  }
-}
-```
-
-### 5.2 Resultados da Simulação (5.000 cenários)
-
-**Mês 12 - Estatísticas:**
-- **Média:** R$ 34.800,33
-- **Mediana:** R$ 30.740,15
-- **Desvio Padrão:** R$ 18.633,69
-- **P95 (cenário pessimista):** R$ 71.081,45
-- **Probabilidade de situação crítica (>R$ 15k):** 90,9%
-
-**Value at Risk (95%):**
-- **VaR:** R$ 71.081,45
-- **Expected Shortfall:** R$ 87.225,69
+### 📝 **Documentação**
+- **Markdown** - Formatação de documentos
+- **LaTeX** - Fórmulas matemáticas
+- **Mermaid** - Diagramas de fluxo
 
 ---
 
-## 6. ANÁLISE DE SENSIBILIDADE
+## 📋 **METODOLOGIA**
 
-### 6.1 Correlações com Resultado Final
+### 🔍 **Coleta de Dados**
+1. **Fontes Primárias (100% confiáveis)**
+   - Site oficial FabLab UFPB
+   - Planilhas operacionais 2025
+   - Arquivo HTML do gerador de boletos
 
-**Correlações identificadas (Mês 12):**
-- **Taxa de crescimento:** 0,9388 (correlação muito forte)
-- **Custo base:** 0,1563 (correlação fraca)
-- **Fator sazonalidade:** -0,0146 (correlação desprezível)
+2. **Fontes Secundárias (85% confiáveis)**
+   - Benchmarks nacionais especializados
+   - Pesquisas setoriais (GRV Software)
+   - Sites de concorrentes
 
-### 6.2 Impacto por Quartis
+3. **Estimativas Fundamentadas (75% confiáveis)**
+   - Análise reversa de produtos
+   - Ajustes regionais de dados nacionais
+   - Triangulação de múltiplas fontes
 
-**Taxa de Crescimento:**
-- **Q1 (25% menores taxas):** R$ 16.373,78
-- **Q4 (25% maiores taxas):** R$ 60.073,78
-- **Diferença:** R$ 43.700,00
-- **Impacto relativo:** 266,9%
+### 📊 **Análise Estatística**
+- **Estatística descritiva** - Médias, medianas, desvios
+- **Análise comparativa** - Índices de competitividade
+- **Projeções financeiras** - Cenários probabilísticos
+- **Validação cruzada** - Verificação de consistência
 
----
-
-## 7. MODELOS DE OTIMIZAÇÃO
-
-### 7.1 Programação Linear
-
-**Função Objetivo:**
-```
-Maximizar: Σ(Benefício_i × x_i)
-Sujeito a: Σ(Custo_i × x_i) ≤ Orçamento
-Onde: x_i ∈ {0,1}
-```
-
-**Algoritmo Guloso por Eficiência:**
-```r
-eficiencia <- beneficios / custos
-ordem_prioridade <- order(eficiencia, decreasing = TRUE)
-```
-
-**Resultado da Otimização:**
-1. **IRR-HTML-004** (Validação) - Eficiência: 2,97
-2. **IRR-HTML-005** (Integração) - Eficiência: 2,475
-3. **IRR-HTML-003** (Usabilidade) - Eficiência: 1,856
-4. **IRR-HTML-002** (Performance) - Eficiência: 1,65
-5. **IRR-HTML-001** (Acessibilidade) - Eficiência: 1,238
-
-**Benefício Total Otimizado:** R$ 27.225,00
+### ✅ **Controle de Qualidade**
+- **Verificação ponto a ponto** de todos os dados
+- **Triangulação de fontes** independentes
+- **Documentação transparente** de limitações
+- **Auditoria completa** dos resultados
 
 ---
 
-## 8. CENÁRIOS DE INTERVENÇÃO
+## 🎯 **PRINCIPAIS RECOMENDAÇÕES**
 
-### 8.1 Modelagem de Cenários
+### 🔧 **Correções Imediatas**
+1. **Corrigir gerador de boletos** - Permitir propostas até 9999
+2. **Implementar sistema de backup** - Evitar perda de dados
+3. **Padronizar processos** - Reduzir requisições bloqueadas
 
-**Cenário 1: Intervenção Mês 3**
-```r
-# Redução gradual: 60% inicial, convergindo para 70%
-fator_reducao <- 0.4 + 0.1 * exp(-(mes - 3))
-```
+### 💰 **Ajustes de Preços**
+1. **CNC Router:** +100% (ainda 33% abaixo do mercado)
+2. **Corte a Laser:** +25% (mantém competitividade)
+3. **Impressão 3D:** Manter preços atuais
 
-**Cenário 2: Intervenção Mês 6**
-```r
-# Redução gradual: 50% inicial, convergindo para 60%
-fator_reducao <- 0.5 + 0.1 * exp(-(mes - 6))
-```
-
-### 8.2 Resultados dos Cenários (Mês 12)
-
-**Comparação de Custos:**
-- **Sem intervenção:** R$ 34.800,33
-- **Intervenção mês 3:** R$ 13.920,56
-- **Intervenção mês 6:** R$ 17.408,79
-
-**Economia Gerada:**
-- **Intervenção mês 3:** R$ 20.879,77
-- **Intervenção mês 6:** R$ 17.391,54
-- **Custo do atraso:** R$ 3.488,23 (diferença)
-- **Custo por mês de atraso:** R$ 1.162,74
+### 📈 **Melhorias Estratégicas**
+1. **Marketing digital** - Presença ativa nas redes sociais
+2. **Parcerias locais** - Colaboração com empresas
+3. **Novos serviços** - Expansão da oferta
 
 ---
 
-## 9. VALIDAÇÃO E VERIFICAÇÃO DOS MODELOS
+## 📚 **REFERÊNCIAS PRINCIPAIS**
 
-### 9.1 Testes de Consistência
-
-**Validação Matemática:**
-```r
-# Verificar soma dos custos individuais
-soma_individual <- sum(custos_por_irregularidade)
-total_calculado <- totais_gerais$custo_total_6meses
-diferenca <- abs(soma_individual - total_calculado)
-# Resultado: Diferença < R$ 0,01 (precisão numérica)
-```
-
-**Validação Estatística:**
-```r
-# Teste de normalidade dos resíduos
-shapiro.test(residuals(modelo_anova))
-# Teste de homogeneidade de variâncias
-bartlett.test(custo_mensal ~ categoria, data = dados)
-```
-
-### 9.2 Benchmarking com Literatura
-
-**Taxas de Crescimento:**
-- **Literatura:** 10-20% ao mês para sistemas não otimizados
-- **Modelo:** 15% ao mês (dentro do intervalo esperado)
-
-**ROI de Projetos de TI:**
-- **Literatura:** 100-300% em projetos de correção
-- **Modelo:** 172,25% (conservador e realista)
+1. **Site Oficial FabLab UFPB** - https://www.ufpb.br/fablab/
+2. **GRV Software** - Pesquisa preços usinagem Brasil
+3. **TOO Coworking** - https://toocoworking.com.br/
+4. **Laser Maravilha** - https://lasermaravilha.com.br/
+5. **Planilhas Operacionais 2025** - Dados internos fornecidos
 
 ---
 
-## 10. LIMITAÇÕES E PREMISSAS
+## 📞 **CONTATO**
 
-### 10.1 Premissas do Modelo
+### 👨‍🎓 **Autor**
+- **Nome:** Diogo da Silva Rego
+- **Matrícula:** 20240045381
+- **Email:** [diogo.rego@academico.ufpb.br]
+- **Curso:** Estatística - UFPB
 
-1. **Taxa de crescimento constante:** 15% ao mês baseada em observações empíricas
-2. **Custo por hora:** R$ 30/hora (salário médio + encargos)
-3. **Dias úteis:** 22 dias por mês
-4. **Jornada de trabalho:** 8 horas/dia
-5. **Taxa de desconto:** 12% ao ano (custo de oportunidade)
-
-### 10.2 Limitações Identificadas
-
-1. **Dados históricos limitados:** 6 meses de observação
-2. **Simulação de alguns parâmetros:** Ausência de logs detalhados
-3. **Sazonalidade simplificada:** Modelo senoidal básico
-4. **Correlações assumidas:** Baseadas em benchmarks da indústria
-
-### 10.3 Intervalos de Confiança
-
-**Principais Métricas (IC 95%):**
-- **Custo Total 6 meses:** R$ 25.000 - R$ 29.500
-- **ROI:** 150% - 195%
-- **Payback:** 3,8 - 5,2 meses
-- **Projeção Mês 12:** R$ 28.000 - R$ 42.000
+### 🏛️ **Instituição**
+- **Universidade Federal da Paraíba (UFPB)**
+- **Centro de Ciências Exatas e da Natureza (CCEN)**
+- **Departamento de Estatística**
 
 ---
 
-## 11. CONCLUSÕES TÉCNICAS
+## 📄 **LICENÇA**
 
-### 11.1 Robustez dos Modelos
+Este projeto é desenvolvido para fins acadêmicos no âmbito da Universidade Federal da Paraíba. 
 
-Os modelos desenvolvidos demonstram **alta robustez** e **consistência interna**:
-
-1. **Correlação perfeita** (r=1,0) entre tempo e custos confirma tendência exponencial
-2. **Simulação Monte Carlo** com 5.000 cenários valida projeções
-3. **Análise de sensibilidade** identifica taxa de crescimento como fator crítico
-4. **Otimização matemática** confirma priorização das irregularidades
-
-### 11.2 Confiabilidade dos Resultados
-
-**Nível de Confiança:** 95%
-**Margem de Erro:** ±8% para valores principais
-**Validação Cruzada:** Múltiplas metodologias convergem para resultados similares
-
-### 11.3 Aplicabilidade Prática
-
-Os modelos são **diretamente aplicáveis** para:
-- Tomada de decisão sobre investimentos
-- Priorização de correções
-- Monitoramento de progresso
-- Análise de cenários futuros
+**Uso Acadêmico Livre** - Permitida reprodução e adaptação para fins educacionais com devida citação.
 
 ---
 
-## 12. ARQUIVOS E CÓDIGOS ENTREGUES
+## 🏆 **RECONHECIMENTOS**
 
-### 12.1 Scripts R Principais
-
-1. **modelos_calculos_auditoria.R** (500+ linhas)
-   - Modelos de crescimento temporal
-   - Cálculos financeiros (VPL, ROI, Payback)
-   - Análise de produtividade
-   - Simulação básica
-
-2. **modelos_estatisticos_visualizacoes.R** (400+ linhas)
-   - Regressão temporal
-   - ANOVA e correlação
-   - Séries temporais (ARIMA)
-   - Value at Risk
-   - Bootstrap
-
-3. **formulas_matematicas_auditoria.R** (600+ linhas)
-   - Demonstração detalhada de cada fórmula
-   - Exemplos práticos com dados reais
-   - Validação matemática
-   - Otimização linear
-
-4. **simulacao_monte_carlo_detalhada.R** (400+ linhas)
-   - Simulação estocástica avançada
-   - Análise de sensibilidade
-   - Cenários de intervenção
-   - Análise de risco
-
-### 12.2 Arquivos de Dados
-
-1. **formulas_matematicas_resumo.csv**
-   - Resumo de todas as fórmulas utilizadas
-   - Aplicações práticas
-   - Referências cruzadas
-
-2. **simulacao_monte_carlo_completa.RData**
-   - Resultados completos da simulação
-   - 60.000 pontos de dados
-   - Estatísticas detalhadas
-
-### 12.3 Total de Código
-
-**Linhas de código R:** 1.900+  
-**Funções implementadas:** 50+  
-**Modelos matemáticos:** 15+  
-**Validações realizadas:** 25+
+Agradecimentos especiais aos **professores orientadores** pela orientação acadêmica e ao **FabLab UFPB** pela disponibilização dos dados operacionais que tornaram esta análise possível.
 
 ---
 
-## REFERÊNCIAS TÉCNICAS
+<div align="center">
 
-1. **Ross, S.A.** - Corporate Finance (Modelos de VPL e ROI)
-2. **Hull, J.C.** - Risk Management (Value at Risk)
-3. **Box, G.E.P.** - Time Series Analysis (Modelos ARIMA)
-4. **Metropolis, N.** - Monte Carlo Method (Simulação estocástica)
-5. **Dantzig, G.B.** - Linear Programming (Otimização)
+**📊 Análise Rigorosa • 🎯 Resultados Práticos • 🚀 Implementação Viável**
 
----
+*Desenvolvido com rigor científico para o FabLab UFPB*
 
-**Documentação elaborada por:** Guilherme Rocha - Auditoria Especializada  
-**Data:** 22 de Julho de 2025  
-**Versão:** 1.0 - DOCUMENTAÇÃO TÉCNICA COMPLETA  
-**Próxima Revisão:** Após implementação das correções
+[![UFPB](https://img.shields.io/badge/UFPB-Universidade%20Federal%20da%20Paraíba-blue)](https://www.ufpb.br/)
+[![FabLab](https://img.shields.io/badge/FabLab-CEAR%20UFPB-green)](https://www.ufpb.br/fablab/)
+
+</div>
 

@@ -1,0 +1,7 @@
+Serviço,FabLab_Estudante,FabLab_Startup,FabLab_Empresa,Mercado_Minimo,Mercado_Medio,Mercado_Maximo,Competitividade_Estudante,Competitividade_Startup,Competitividade_Empresa
+Impressão 3D FDM,1.6,8.0,16.0,10.0,20.0,30.0,84,60,20
+Impressão 3D Resina,2.0,10.0,20.0,15.0,25.0,50.0,87,60,20
+Corte Laser,18.0,36.0,72.0,87.0,120.0,240.0,79,70,40
+CNC Router,4.0,20.0,40.0,107.65,156.28,189.78,96,87,75
+Sala Reunião,4.0,20.0,40.0,35.0,52.5,75.0,89,62,24
+Sala Treinamento,10.0,50.0,100.0,50.0,60.0,100.0,80,17,0
